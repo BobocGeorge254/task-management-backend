@@ -6,12 +6,7 @@ from .serializers import TaskSerializer
 
 class TaskListApiView(APIView):
     def post(self, request, *args, **kwargs):
-        data = {
-            'description': request.data.get('description'),
-            'status': request.data.get('status'),
-            'priority': request.data.get('priority')
-        }
-        serializer = TaskSerializer(data=data)
+        serializer = TaskSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -42,13 +37,8 @@ class TaskDetailApiView(APIView):
         task = self.get_object(task_id)
         if not task:
             return Response({"error": "Task not found"}, status=status.HTTP_404_NOT_FOUND)
-        
-        data = {
-            'description': request.data.get('description', task.description),
-            'status': request.data.get('status', task.status),
-            'priority': request.data.get('priority', task.priority)
-        }
-        serializer = TaskSerializer(task, data=data)
+
+        serializer = TaskSerializer(task, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)

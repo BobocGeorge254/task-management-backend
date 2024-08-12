@@ -23,6 +23,7 @@ class Priority(Enum):
 
 
 class Task(models.Model):
-        description = models.CharField(max_length=255)
-        status = models.IntegerField(choices=Status.choices(), default=Status.PENDING.value)
-        priority = models.IntegerField(choices=Priority.choices(), default=Priority.LOW.value)
+    description = models.CharField(max_length=255)
+    status = models.IntegerField(choices=Status.choices(), default=Status.PENDING.value)
+    priority = models.IntegerField(choices=Priority.choices(), default=Priority.LOW.value)
+    image_path = models.ImageField(upload_to='images/', null=True, blank=True)
