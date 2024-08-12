@@ -1,4 +1,4 @@
-backend/images
+images/
 
 # Ignore all __pycache__ directories
 __pycache__/
